@@ -1,0 +1,27 @@
+{
+  "name": "do-css-framework-sample",
+  "version": "1.0.0",
+  "description": "Sample of do-css-framework usage",
+  "main": "index.js",
+  "scripts": {
+    "sass": "NODE_ENV=development gulp sass",
+    "start": "NODE_ENV=development gulp start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Digital Origin",
+  "license": "ISC",
+  "dependencies": {
+    "@digital-origin/do-css-framework": "18.4.2-0",
+    "node-sass": "4.9.4"
+  },
+  "devDependencies": {
+    "browser-sync": "2.26.3",
+    "gulp": "3.9.1",
+    "gulp-autoprefixer": "6.0.0",
+    "gulp-concat": "2.6.1",
+    "gulp-sass": "4.0.1",
+    "gulp-sass-glob": "1.0.9",
+    "preprocess": "3.1.0",
+    "run-sequence": "2.2.1"
+  }
+}
