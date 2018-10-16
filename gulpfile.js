@@ -21,8 +21,26 @@ const htmlConfig = {
     src: config.src + '*.html',
 };
 
+const copyFiles = {
+    src: ['./src/images/**/*', './src/fonts/**/*', './src/icons/**/*'],
+};
+
+const browserSyncConfig = {
+  open: false,
+  server: {
+    baseDir: config.dest,
+  },
+  port: 3000,
+  ui: {
+    port: 3001
+  },
+  ghostMode: {
+    links: false
+  }
+};
+
 gulp.task('start', function(cb) {
-  runSequence(['sass'], ['html'], 'watch', cb);
+  runSequence('copyFiles', 'sass', 'html', 'watch', cb);
 });
 
 gulp.task('html', function() {
@@ -30,7 +48,6 @@ gulp.task('html', function() {
     .pipe(gulp.dest(config.dest))
     .pipe(browserSync.stream());
 });
-
 
 gulp.task('sass', function () {
   return gulp.src(sassConfig.src)
@@ -47,29 +64,17 @@ gulp.task('sass', function () {
     .pipe(gulp.dest(config.dest))
 });
 
-gulp.task('browserSync', function() {
-
-  const DEFAULT_FILE = 'index.html';
-  // const ASSET_EXTENSION_REGEX = new RegExp(`\\b(?!\\?)\\.(${config.assetExtensions.join('|')})\\b(?!\\.)`, 'i');
-
-  browserSync.init({
-    open: false,
-    server: {
-      baseDir: config.dest,
-    },
-  	port: 3000,
-  	ui: {
-    	port: 3001
-    },
-    ghostMode: {
-      links: false
-    }
-  });
-
+gulp.task('copyFiles', function() {
+  return gulp.src(copyFiles.src, { base: config.src })
+    .pipe(gulp.dest(config.dest));
 });
 
+gulp.task('browserSync', function() {
+  browserSync.init(browserSyncConfig);
+});
 
 gulp.task('watch', ['browserSync'], function() {
-  gulp.watch(sassConfig.src,  function() { runSequence('sass', 'html') });
+  gulp.watch(sassConfig.src,  function() { runSequence('copyFiles', 'sass', 'html') });
   gulp.watch(htmlConfig.src, ['html']);
+  gulp.watch(copyFiles.src, ['copyFiles']);
 });
