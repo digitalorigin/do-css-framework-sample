@@ -12,6 +12,8 @@ This repository will be used as the base for the DO-CSS framework workshop
 
 ### Usage
 
+Install dependencies `npm install`.
+
 To run the project, please, execute `npm start`.
 
 You can access to **http://localhost:3000** to see the site.
